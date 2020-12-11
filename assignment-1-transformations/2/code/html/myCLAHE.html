@@ -1,0 +1,267 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>myCLAHE</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-08-30"><meta name="DC.source" content="myCLAHE.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> [orig_img, clahe_img] = myCLAHE(pth, one_sided_window, threshold)
+<span class="comment">%     one_sided_window = 2; % half of the total window</span>
+<span class="comment">%     pth = '../data/barbara.png';</span>
+    <span class="comment">% actual CLAHE function</span>
+    <span class="keyword">function</span> [clahe] = perChunk(inp_chunk)
+        midpt_x = uint8((size(inp_chunk, 1) + 1)/2);
+        midpt_y = uint8((size(inp_chunk, 2) + 1)/2);
+        edges = -0.5:1:256.5;
+        counts = histcounts(inp_chunk, edges);
+        <span class="comment">% remove padded 256s which are present in the 257th bin</span>
+        counts = counts(1:256);
+        <span class="comment">% pdf</span>
+        pdf = double(counts)/sum(counts);
+    <span class="comment">%     f = figure('visible', 'on');</span>
+    <span class="comment">%     plot(1:256, pdf, 'r--')</span>
+    <span class="comment">%     hold on</span>
+        <span class="comment">% calculate total mass above threshold</span>
+        above_thresh = pdf &gt; threshold;
+        total_excess_mass = sum((pdf - threshold).*above_thresh);
+        <span class="comment">% clamp values</span>
+        pdf(pdf &gt; threshold) = threshold;
+        <span class="comment">% redistribute it</span>
+        pdf = pdf + total_excess_mass/256;
+    <span class="comment">%     plot(1:256, pdf, 'b--')</span>
+    <span class="comment">%     saveas(f, 'eg', 'png');</span>
+        <span class="comment">% calculate cdf</span>
+        cdf = cumsum(pdf)/sum(pdf);
+        <span class="comment">% HE</span>
+        clahe = cdf(inp_chunk(midpt_x, midpt_y)+1);
+    <span class="keyword">end</span>
+
+    orig_img = imread(pth);
+    num_rows = size(orig_img, 1);
+    num_cols = size(orig_img, 2);
+<span class="comment">%     orig_img = orig_img(1:10, 1:10, 1);</span>
+    clahe_img = zeros(size(orig_img));
+
+    <span class="keyword">for</span> channel = 1:size(orig_img, 3)
+        cur_channel = orig_img(:,:,channel);
+        <span class="comment">% https://in.mathworks.com/help/images/ref/padarray.html</span>
+        <span class="comment">% pad corners with 256 so that they can be removed later</span>
+        cur_channel_pad = padarray(cur_channel,[one_sided_window, one_sided_window],256,<span class="string">'both'</span>);
+        final = nlfilter(cur_channel_pad, [2*one_sided_window+1,2*one_sided_window+1], @perChunk);
+        <span class="comment">% crop</span>
+        final = final(one_sided_window+1:one_sided_window+num_rows, one_sided_window+1:one_sided_window+num_cols);
+        clahe_img(:,:,channel) = final;
+    <span class="keyword">end</span>
+    orig_img = double(orig_img)/255;
+<span class="keyword">end</span>
+
+<span class="comment">% function [orig_img, clahe_img] = myCLAHE(pth, threshold, one_side_window)</span>
+<span class="comment">% %     threshold = 0.2;</span>
+<span class="comment">% %     one_side_window = 2; % half of the total window</span>
+<span class="comment">% %     pth = '../data/statue.png';</span>
+<span class="comment">%</span>
+<span class="comment">%     orig_img = imread(pth);</span>
+<span class="comment">% %     orig_img = orig_img(1:2, 1:2, 1);</span>
+<span class="comment">%     num_rows = size(orig_img, 1);</span>
+<span class="comment">%     num_cols = size(orig_img, 2);</span>
+<span class="comment">%     clahe_img = zeros(size(orig_img));</span>
+<span class="comment">%</span>
+<span class="comment">%     for channel = 1:size(orig_img, 3)</span>
+<span class="comment">%         cur_channel = orig_img(:,:,channel);</span>
+<span class="comment">%         % https://in.mathworks.com/help/images/ref/padarray.html</span>
+<span class="comment">%         % pad corners with 256 so that they can be removed later</span>
+<span class="comment">%         cur_channel_pad = padarray(cur_channel,[one_side_window, one_side_window],256,'both');</span>
+<span class="comment">%</span>
+<span class="comment">%         for row = one_side_window+1:one_side_window+num_rows</span>
+<span class="comment">%             for col = one_side_window+1:one_side_window+num_cols</span>
+<span class="comment">%                 l = row-one_side_window;</span>
+<span class="comment">%                 r = row+one_side_window;</span>
+<span class="comment">%                 t = col-one_side_window;</span>
+<span class="comment">%                 b = col+one_side_window;</span>
+<span class="comment">%                 chunk = cur_channel_pad(l:r,t:b);</span>
+<span class="comment">%                 % calculate hist</span>
+<span class="comment">%                 [counts, ~] = histcounts(chunk, 257); % ~ means ignore</span>
+<span class="comment">%                 % remove padded 256s which are present in the 257th bin</span>
+<span class="comment">%                 counts = counts(1:256);</span>
+<span class="comment">%                 % pdf</span>
+<span class="comment">%                 pdf = counts./sum(counts);</span>
+<span class="comment">%                 % calculate total mass above threshold</span>
+<span class="comment">%                 above_thresh = pdf &gt; threshold;</span>
+<span class="comment">%                 total_excess_mass = sum((pdf - threshold).*above_thresh);</span>
+<span class="comment">%                 % redistribute it</span>
+<span class="comment">%                 pdf = pdf + total_excess_mass/size(pdf, 1);</span>
+<span class="comment">%                 % calculate cdf</span>
+<span class="comment">%                 cdf = cumsum(pdf)/sum(pdf);</span>
+<span class="comment">%                 % HE</span>
+<span class="comment">%                 clahe_img(l:r, t:b, channel) = cdf(chunk+1);</span>
+<span class="comment">%             end</span>
+<span class="comment">%         end</span>
+<span class="comment">% %         plot(1:256, pdf);</span>
+<span class="comment">% %         hold on</span>
+<span class="comment">%     end</span>
+<span class="comment">% end</span>
+</pre><pre class="codeoutput error">Not enough input arguments.
+
+Error in myCLAHE (line 32)
+    orig_img = imread(pth);
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function [orig_img, clahe_img] = myCLAHE(pth, one_sided_window, threshold)
+%     one_sided_window = 2; % half of the total window
+%     pth = '../data/barbara.png';
+    % actual CLAHE function
+    function [clahe] = perChunk(inp_chunk)
+        midpt_x = uint8((size(inp_chunk, 1) + 1)/2);
+        midpt_y = uint8((size(inp_chunk, 2) + 1)/2);
+        edges = -0.5:1:256.5;
+        counts = histcounts(inp_chunk, edges);
+        % remove padded 256s which are present in the 257th bin
+        counts = counts(1:256);
+        % pdf
+        pdf = double(counts)/sum(counts);
+    %     f = figure('visible', 'on');
+    %     plot(1:256, pdf, 'rREPLACE_WITH_DASH_DASH')
+    %     hold on
+        % calculate total mass above threshold
+        above_thresh = pdf > threshold;
+        total_excess_mass = sum((pdf - threshold).*above_thresh);
+        % clamp values
+        pdf(pdf > threshold) = threshold;
+        % redistribute it
+        pdf = pdf + total_excess_mass/256;
+    %     plot(1:256, pdf, 'bREPLACE_WITH_DASH_DASH')
+    %     saveas(f, 'eg', 'png');
+        % calculate cdf
+        cdf = cumsum(pdf)/sum(pdf);
+        % HE
+        clahe = cdf(inp_chunk(midpt_x, midpt_y)+1);    
+    end
+
+    orig_img = imread(pth);
+    num_rows = size(orig_img, 1);
+    num_cols = size(orig_img, 2);
+%     orig_img = orig_img(1:10, 1:10, 1);
+    clahe_img = zeros(size(orig_img));
+    
+    for channel = 1:size(orig_img, 3)
+        cur_channel = orig_img(:,:,channel);
+        % https://in.mathworks.com/help/images/ref/padarray.html
+        % pad corners with 256 so that they can be removed later
+        cur_channel_pad = padarray(cur_channel,[one_sided_window, one_sided_window],256,'both');
+        final = nlfilter(cur_channel_pad, [2*one_sided_window+1,2*one_sided_window+1], @perChunk);
+        % crop
+        final = final(one_sided_window+1:one_sided_window+num_rows, one_sided_window+1:one_sided_window+num_cols);
+        clahe_img(:,:,channel) = final;
+    end            
+    orig_img = double(orig_img)/255;
+end
+
+% function [orig_img, clahe_img] = myCLAHE(pth, threshold, one_side_window)
+% %     threshold = 0.2;
+% %     one_side_window = 2; % half of the total window
+% %     pth = '../data/statue.png';
+%         
+%     orig_img = imread(pth);
+% %     orig_img = orig_img(1:2, 1:2, 1);
+%     num_rows = size(orig_img, 1);
+%     num_cols = size(orig_img, 2);
+%     clahe_img = zeros(size(orig_img));
+%     
+%     for channel = 1:size(orig_img, 3)
+%         cur_channel = orig_img(:,:,channel);
+%         % https://in.mathworks.com/help/images/ref/padarray.html
+%         % pad corners with 256 so that they can be removed later
+%         cur_channel_pad = padarray(cur_channel,[one_side_window, one_side_window],256,'both');
+%         
+%         for row = one_side_window+1:one_side_window+num_rows
+%             for col = one_side_window+1:one_side_window+num_cols
+%                 l = row-one_side_window;
+%                 r = row+one_side_window;
+%                 t = col-one_side_window;
+%                 b = col+one_side_window;
+%                 chunk = cur_channel_pad(l:r,t:b);
+%                 % calculate hist
+%                 [counts, ~] = histcounts(chunk, 257); % ~ means ignore
+%                 % remove padded 256s which are present in the 257th bin
+%                 counts = counts(1:256);
+%                 % pdf
+%                 pdf = counts./sum(counts);
+%                 % calculate total mass above threshold
+%                 above_thresh = pdf > threshold;
+%                 total_excess_mass = sum((pdf - threshold).*above_thresh);
+%                 % redistribute it
+%                 pdf = pdf + total_excess_mass/size(pdf, 1);
+%                 % calculate cdf
+%                 cdf = cumsum(pdf)/sum(pdf);
+%                 % HE
+%                 clahe_img(l:r, t:b, channel) = cdf(chunk+1);
+%             end
+%         end                  
+% %         plot(1:256, pdf);
+% %         hold on
+%     end
+% end
+##### SOURCE END #####
+--></body></html>

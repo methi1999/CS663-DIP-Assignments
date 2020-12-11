@@ -1,0 +1,207 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Q5</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-11-16"><meta name="DC.source" content="myMainScript.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Q5</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Clean Image</a></li><li><a href="#2">Noisy Image</a></li><li><a href="#3">Complexity of Algorithm</a></li><li><a href="#4">Rotation of Images</a></li></ul></div><h2 id="1">Clean Image</h2><p>We begin this section by creating images I and J as 300x300 size uint8 matrices. After bringing these input images into Fourier Domain we try to estimate the shift along x axis and y axis when comparing image I and J. We generate phase values at (10,10), (11,10) and (10,11) as per equation (3) given in the paper " An FFT-based technique for Translation, Rotation and Scale-Invariant Image rotation".</p><p>By dividing the complex phase value that we generate for coordinates of the form (x+1,y) by that of (x,y) we calculate the xshift (after appropriate scaling). Similarly we use coordinates of the form (x,y+1) and (x,y) to generate the shift in y. We can evaluate this anywhere on the grid but we chose (10,10) for all experiments.</p><p>The Log fourier magnitude transform of the cross power spectrum shows a maxima at 271,71. This corresponds to -30,70 shift values.</p><pre class="codeoutput">Predicted Xshift = -30 Predicted Yshift = 70
+</pre><img vspace="5" hspace="5" src="myMainScript_01.png" alt=""> <h2 id="2">Noisy Image</h2><p>In order to display consistent results for report we tested with a fixed random seed set to default (i.e. default seed (0) and algorithm (Mersenne Twister)) All settings for this experiment are the same as the previous part, with the exception of the addition of gaussian noise of zero mean and variance of 20. This leads to inconsistent predictions for shift.</p><p>The effect of this is clearly demonstrated in the Log fourier magnitude transform of the cross power spectrum, where a maxima is visible at -30,70 but this peak is plagued by a a very low SNR.</p><pre class="codeoutput">single coordinate based Predicted Xshift = -29.1532 Predicted Yshift = 48.2141
+</pre><img vspace="5" hspace="5" src="myMainScript_02.png" alt=""> <h2 id="3">Complexity of Algorithm</h2><p>For an NxN image, a pixel wise image comparison would take the order of N^4 operations, as there are N^2 pixels to compare, and N^2 locations that the image has to be shifted to for each comparison. In contrast this approach takes the order of Nlog(N) operations to generate DFT, followed by matrix multiplications that can take upto order N^2 to generate. Therefore DFT based approach takes order N^2, making it much faster than pixel wise comparison.</p><h2 id="4">Rotation of Images</h2><p>In the case of translation of image we were provided with a simple linear equation, where we could fix value of one coordinate and increase value of the other to obtain a unit change. This was used to evaluate x and y translation shifts.</p><p>In the case of a rotated image, we are fortunate to receive similar linear equations, but we first convert the image into its magnitude components removing the effect of translation. Subsequently we convert the image into a polar representation, where there is a displacement in one coordinate, which is the angle. We can follow exactly the same steps that we have done for calculating shift in x and y coordinates, applied to r (radius) and <img src="myMainScript_eq08288499342375314727.png" alt="$\theta$" style="width:6px;height:11px;"> (angle) coordinates.</p><p><img src="myMainScript_eq16936483531644201882.png" alt="$M_{1}(r, \theta) = M_{2}(r, \theta - \theta _{0})$" style="width:87px;height:9px;"> is identical to solving <img src="myMainScript_eq07826041968569887920.png" alt="$F_{1} (x,y) = F_{2}(x-x_{0},y-y_{0})$" style="width:103px;height:9px;"> for <img src="myMainScript_eq02249526273445932828.png" alt="$x_{0} = 0$" style="width:23px;height:7px;">.</p><p>Here we generate <img src="myMainScript_eq15881875510505807195.png" alt="$M_{1}$" style="width:18px;height:13px;"> and <img src="myMainScript_eq10443026409667414366.png" alt="$M_{2}$" style="width:19px;height:13px;"> from input images by first applying DFT to the input images which and taking magnitude to remove phase difference corresponding to image translation.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Q5
+%% Clean Image
+% We begin this section by creating images I and J as 300x300 size uint8
+% matrices. After bringing these input images into Fourier Domain we try to
+% estimate the shift along x axis and y axis when comparing image I and J.
+% We generate phase values at (10,10), (11,10) and (10,11) as per equation 
+% (3) given in the paper " An FFT-based technique for Translation, Rotation 
+% and Scale-Invariant Image rotation".
+%
+% By dividing the complex phase value that we generate for coordinates of
+% the form (x+1,y) by that of (x,y) we calculate the xshift (after
+% appropriate scaling). Similarly we use coordinates of the form (x,y+1)
+% and (x,y) to generate the shift in y. We can evaluate this anywhere on the grid 
+% but we chose (10,10) for all experiments. 
+% 
+% The Log fourier magnitude transform of the cross power spectrum shows a maxima at 
+% 271,71. This corresponds to -30,70 shift values.
+clear;
+I = zeros(300,'uint8');
+I(50:100,50:120) = 255;
+%imshow(I)
+J = zeros(300,'uint8');
+J(20:70,120:190) = 255;
+%imshow(J)
+%If = fftshift(fft2(I));
+If = fft2(I);
+Ifmag = abs(If);
+%prodIfmag = prod(If);
+%Jf = fftshift(fft2(J));
+Jf = fft2(J);
+Jfmag = abs(Jf);
+Jfc = conj(Jf);
+Expnum = If.*Jfc;
+Expden = Ifmag.*Jfmag;
+CrossPowSpec = Expnum./Expden;
+Logcrosspowerspec = log(abs(fft2(CrossPowSpec))+1);
+imagesc(Logcrosspowerspec)
+colorbar
+title('Log Fourier magnitude of Cross Power Spectrum')
+prediction1 = If(10,10)*Jfc(10,10)/(Ifmag(10,10)*Jfmag(10,10));
+prediction2 = If(11,10)*Jfc(11,10)/(Ifmag(11,10)*Jfmag(11,10));
+prediction3 = If(10,11)*Jfc(10,11)/(Ifmag(10,11)*Jfmag(10,11));
+xshift = 300*angle(prediction2/prediction1)./(2*pi);
+yshift = 300*angle(prediction3/prediction1)./(2*pi);
+text = ['Predicted Xshift = ',num2str(xshift),' Predicted Yshift = ',num2str(yshift)];
+disp(text)
+%% Noisy Image
+% In order to display consistent results for report we tested with a fixed
+% random seed set to default (i.e. default seed (0) and algorithm (Mersenne Twister))
+% All settings for this experiment are the same as the previous part, with
+% the exception of the addition of gaussian noise of zero mean and variance
+% of 20. This leads to inconsistent predictions for shift.
+% 
+% The effect of this is clearly demonstrated in the Log fourier magnitude 
+% transform of the cross power spectrum, where a maxima is visible at
+% -30,70 but this peak is plagued by a a very low SNR. 
+clear;
+rng('default');
+I = zeros(300,'double');
+I(50:100,50:120) = 255;
+I = I + 20*randn(300);
+%imshow(I)
+J = zeros(300,'double');
+J(20:70,120:190) = 255;
+J = J + 20*randn(300);
+If = fft2(I);
+Ifmag = abs(If);
+%prodIfmag = prod(If);
+%Jf = fftshift(fft2(J));
+Jf = fft2(J);
+Jfmag = abs(Jf);
+Jfc = conj(Jf);
+Expnum = If.*Jfc;
+Expden = Ifmag.*Jfmag;
+CrossPowSpec = Expnum./Expden;
+Logcrosspowerspec = log(abs(fft2(CrossPowSpec))+1);
+imagesc(Logcrosspowerspec)
+colorbar
+title('Log Fourier magnitude of Cross Power Spectrum')
+x=10;
+y=10;
+prediction1 = If(x,y)*Jfc(x,y)/(Ifmag(x,y)*Jfmag(x,y));
+prediction2 = If(x+1,y)*Jfc(x+1,y)/(Ifmag(x+1,y)*Jfmag(x+1,y));
+prediction3 = If(x,y+1)*Jfc(x,y+1)/(Ifmag(x,y+1)*Jfmag(x,y+1));
+xshift = 300*angle(prediction2/prediction1)./(2*pi);
+yshift = 300*angle(prediction3/prediction1)./(2*pi);
+text = ['single coordinate based Predicted Xshift = ',num2str(xshift),' Predicted Yshift = ',num2str(yshift)];
+disp(text)
+%totxshift
+%=0;
+%totyshift =0;
+%for i =1:299
+%   for j = 1:299
+%       x=i;
+%       y=j;
+%       prediction1 = If(x,y)*Jfc(x,y)/(Ifmag(x,y)*Jfmag(x,y));
+%       prediction2 = If(x+1,y)*Jfc(x+1,y)/(Ifmag(x+1,y)*Jfmag(x+1,y));
+%       prediction3 = If(x,y+1)*Jfc(x,y+1)/(Ifmag(x,y+1)*Jfmag(x,y+1));
+%       totxshift = totxshift+ 300*angle(prediction2/prediction1)./(2*pi);
+%       totyshift = totyshift +300*angle(prediction3/prediction1)./(2*pi);
+%   end
+%end
+%totxshift = totxshift/(299*299);
+%totyshift = totyshift/(299*299);
+%% Complexity of Algorithm
+% For an NxN image, a pixel wise image comparison would take the order of N^4 operations, 
+% as there are N^2 pixels to compare, and N^2 locations that the image has
+% to be shifted to for each comparison. In contrast this approach takes the
+% order of Nlog(N) operations to generate DFT, followed by matrix
+% multiplications that can take upto order N^2 to generate. Therefore DFT based approach takes order N^2,
+% making it much faster than pixel wise comparison.
+
+%% Rotation of Images
+% In the case of translation of image we were provided with a simple linear
+% equation, where we could fix value of one coordinate and increase value
+% of the other to obtain a unit change. This was used to evaluate x and y
+% translation shifts.
+% 
+% In the case of a rotated image, we are fortunate to receive similar linear
+% equations, but we first convert the image into its magnitude components
+% removing the effect of translation. Subsequently we convert the image
+% into a polar representation, where there is a displacement in one
+% coordinate, which is the angle. We can follow exactly the same steps that we have
+% done for calculating shift in x and y coordinates, applied to r (radius)
+% and $\theta$ (angle) coordinates.
+% 
+% $M_{1}(r, \theta) = M_{2}(r, \theta - \theta _{0})$ is identical to
+% solving $F_{1} (x,y) = F_{2}(x-x_{0},y-y_{0})$ for $x_{0} = 0$.
+% 
+% Here we generate $M_{1}$ and $M_{2}$ from input images by first applying
+% DFT to the input images which and taking magnitude to remove phase
+% difference corresponding to image translation.
+##### SOURCE END #####
+--></body></html>

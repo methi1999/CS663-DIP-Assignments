@@ -1,0 +1,157 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>myMainScript</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-08-29"><meta name="DC.source" content="myMainScript.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Q3a</a></li><li><a href="#3">Q3b</a></li><li><a href="#4">Q3c</a></li><li><a href="#5">Q3d</a></li></ul></div><h2 id="2">Q3a</h2><p>We note that, intuitively, the exact original distribution of the histogram <img src="myMainScript_eq12172049916369642753.png" alt="$h(I)$"> does not matter in deriving the mean intensity of the image after performing equalization across the two regions. We demonstrate this fact by a simple proof.</p><p>After equalization is performed, the distribution is uniform on <img src="myMainScript_eq07650922794037281872.png" alt="$[0,a]$"> and <img src="myMainScript_eq13444881300166916115.png" alt="$(a,1]$">, with a probability mass of <img src="myMainScript_eq14221827199139923399.png" alt="$\alpha$"> in <img src="myMainScript_eq07650922794037281872.png" alt="$[0,a]$">. Let us calculate the expected mean after equalization. The expected mean is equal to <img src="myMainScript_eq15568033942977522539.png" alt="$E[X]$">, where <img src="myMainScript_eq12362013959998143435.png" alt="$X$"> is a random sample drawn from this distribution. We have</p><p><img src="myMainScript_eq10527368743553495688.png" alt="$E[X] = \int_{x=0}^{x=a}xf(x)dx + \int_{x=a}^{x=1}xf(x)dx$"></p><p>We note that, if <img src="myMainScript_eq16305162721781659731.png" alt="$x \in [0,a], f(x) = \frac{\alpha}{a}$">, and if <img src="myMainScript_eq17034034596728544916.png" alt="$x \in (a,1], f(x) = \frac{1-\alpha}{1-a}$">.</p><p>Integrating, we get <img src="myMainScript_eq04103760563243939236.png" alt="$E[X] = \frac{1+a-\alpha}{2}.$"></p><h2 id="3">Q3b</h2><p>Continuing the previous question, we note that when <img src="myMainScript_eq05508344529756732484.png" alt="$a$"> is the median, then we necessarily have <img src="myMainScript_eq00280006886672270272.png" alt="$\alpha = \frac{1}{2}$">. Thus, plugging this in to the previous formula, we have <img src="myMainScript_eq17046017659914417843.png" alt="$E[X] = \frac{2a+1}{4}.$"></p><p>An important point to understand why we cannot simplify the answer further, i.e actually find the set of values of <img src="myMainScript_eq05508344529756732484.png" alt="$a$"> that are both mean and median, is to show that actually all <img src="myMainScript_eq05508344529756732484.png" alt="$a$"> can be both the mean and the median and thus the extra condition on <img src="myMainScript_eq05508344529756732484.png" alt="$a$"> being the mean of the original distribution is useless. A simple proof runs like this: assume the entire pdf to be concentrated on a point <img src="myMainScript_eq05508344529756732484.png" alt="$a$">. This point will be both mean and median of it's distribution; hence, every point can satisfy such a property.</p><h2 id="4">Q3c</h2><p>We believe such a method (as described in part b) holds promise on underexposed or over exposed images. Such images contain a peak in their histogram at an extrema (very low or very high intensity). When conventional histogram equalization is applied, contrast is lost in such an image. For example if conventional histogram equalisation were applied to an under exposed image dark shades would get mapped to a brighter one. On the other hand if a median based piece wise equalisation is performed we can ensure that a dark tone can only be remapped to another value locally. This improves the contrast of the image, as can be observed in part d.</p><h2 id="5">Q3d</h2><p>As can be observed below, conventional histogram equalisation maps black values to grey which is an undesirable manipulation of the image, whereas piece wise histogram equalization manages to bring out similar detail among higher intensity pixels without ruining contrast.</p><pre class="codeoutput">Elapsed time is 0.974406 seconds.
+</pre><img vspace="5" hspace="5" src="myMainScript_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+
+clear
+clc
+tic;
+%% Q3a
+% We note that, intuitively, the exact original distribution of the histogram $h(I)$ does
+% not matter in deriving the mean intensity of the image after performing
+% equalization across the two regions. We demonstrate this fact by a simple
+% proof.
+%
+% After equalization is performed, the distribution is uniform on $[0,a]$
+% and $(a,1]$, with a probability mass of $\alpha$ in $[0,a]$. Let us
+% calculate the expected mean after equalization. The expected mean is
+% equal to $E[X]$, where $X$ is a random sample drawn from this distribution.
+% We have
+%
+% $E[X] = \int_{x=0}^{x=a}xf(x)dx + \int_{x=a}^{x=1}xf(x)dx$
+% 
+% We note that, if $x \in [0,a], f(x) = \frac{\alpha}{a}$, and if $x \in
+% (a,1], f(x) = \frac{1-\alpha}{1-a}$.
+%
+% Integrating, we get 
+% $E[X] = \frac{1+a-\alpha}{2}.$
+%% Q3b
+% Continuing the previous question, we note that when $a$ is the median,
+% then we necessarily have $\alpha = \frac{1}{2}$. Thus, plugging this in
+% to the previous formula, we have 
+% $E[X] = \frac{2a+1}{4}.$ 
+%
+% An important point to understand why we cannot simplify the answer
+% further, i.e actually find the set of values of $a$ that are both mean
+% and median, is to show that actually all $a$ can be both the mean and the
+% median and thus the extra condition on $a$ being the mean of the original
+% distribution is useless. A simple proof runs like this: assume the entire
+% pdf to be concentrated on a point $a$. This point will be both mean and
+% median of it's distribution; hence, every point can satisfy such a
+% property.
+%% Q3c
+% We believe such a method (as described in part b) holds promise on
+% underexposed or over exposed images. Such images contain a peak in their
+% histogram at an extrema (very low or very high intensity). When
+% conventional histogram equalization is applied, contrast is lost in such
+% an image. For example if conventional histogram equalisation were applied
+% to an under exposed image dark shades would get mapped to a brighter one.
+% On the other hand if a median based piece wise equalisation is performed
+% we can ensure that a dark tone can only be remapped to another value
+% locally. This improves the contrast of the image, as can be observed in
+% part d.
+%% Q3d
+% As can be observed below, conventional histogram equalisation maps black
+% values to grey which is an undesirable manipulation of the image, whereas
+% piece wise histogram equalization manages to bring out similar detail 
+% among higher intensity pixels without ruining contrast. 
+[orig, new] = myIntensitytxm('../data/underexposedimage.jpg');
+[orig1, new1] = myHE('../data/underexposedimage.jpg');
+
+subplot(3,2,1),imagesc(orig);
+title('Original Image');
+colorbar;
+subplot(3,2,2);
+plot(imhist(orig));
+xlabel('Intensity');
+ylabel('No. of pixels')
+title('Histogram');
+subplot(3,2,3),imagesc(new);
+title('Piecewise Histogram Equalised');
+colorbar;
+subplot(3,2,4);
+plot(imhist(new));
+xlabel('Intensity');
+ylabel('No. of pixels')
+title('Histogram');
+subplot(3,2,5),imagesc(new1);
+title('Histogram Equalised')
+colorbar;
+subplot(3,2,6);
+plot(imhist(new1));
+xlabel('Intensity');
+ylabel('No. of pixels')
+title('Histogram');
+axis tight;
+colormap gray;
+toc;
+##### SOURCE END #####
+--></body></html>

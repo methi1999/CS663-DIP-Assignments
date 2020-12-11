@@ -1,0 +1,303 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>myMainScript</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-08-30"><meta name="DC.source" content="myMainScript.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Q2</a></li><li><a href="#2">Q2 a</a></li><li><a href="#4">Q2 b</a></li><li><a href="#8">Q2 c</a></li><li><a href="#10">Q2 d</a></li><li><a href="#12">Q2 e</a></li></ul></div><h2 id="1">Q2</h2><h2 id="2">Q2 a</h2><p>By trying out a few values, we finalised a threshold of 13 for preserving the hands and the statue.</p><img vspace="5" hspace="5" src="myMainScript_01.png" alt=""> <h2 id="4">Q2 b</h2><p>We use a 5 percentile-95 percentile strategy. Let:</p><p><img src="myMainScript_eq08880756535218074403.png" alt="$m_1 = \left \lfloor{cdf^{-1}(0.05)}\right \rfloor$" style="width:91px;height:14px;"> and <img src="myMainScript_eq13177868917435798139.png" alt="$m_2 = \left \lfloor{cdf^{-1}(0.95)}\right \rfloor$" style="width:91px;height:14px;"> where cdf is the cumulative distribution function of the image intensities.</p><p>The transformaton function is: <img src="myMainScript_eq17441593096930677419.png" alt="$f(x,y) = (I(x,y) - m_1)/(m_2-m_1)$" style="width:168px;height:11px;"> where I(x,y) denotes the pixel intensity of pixel (x,y).</p><p>Values below <img src="myMainScript_eq17611615054256613636.png" alt="$m_1$" style="width:13px;height:7px;"> and above <img src="myMainScript_eq13351576542735805913.png" alt="$m_2$" style="width:13px;height:7px;"> are mapped to 0 and 255 respectively.</p><img vspace="5" hspace="5" src="myMainScript_02.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_03.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_04.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_05.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_06.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_07.png" alt=""> <p>References:</p><div><ul><li>Colormap: <a href="https://www.mathworks.com/help/matlab/ref/gray.html">https://www.mathworks.com/help/matlab/ref/gray.html</a></li><li>imhist function: <a href="https://in.mathworks.com/help/images/ref/imhist.html">https://in.mathworks.com/help/images/ref/imhist.html</a></li><li>Calculation of CDF: <a href="https://in.mathworks.com/help/matlab/ref/cumsum.html">https://in.mathworks.com/help/matlab/ref/cumsum.html</a></li></ul></div><p>Contrast stretching is not effective in image 5 because it contains many high-intensity pixels (close to 255) and many dark pixels (close to 0).</p><p>As a result, <img src="myMainScript_eq11987716378254877982.png" alt="$m_1 \approx 0$" style="width:34px;height:9px;"> and <img src="myMainScript_eq11105739819460051014.png" alt="$m_2 \approx 255$" style="width:45px;height:9px;">, which results in a linear function equivalent to the identity mapping.</p><h2 id="8">Q2 c</h2><img vspace="5" hspace="5" src="myMainScript_08.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_09.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_10.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_11.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_12.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_13.png" alt=""> <p>On applying HE on image 5, we get a much better result as compared to Linear Contrast Stretching.</p><p>Contrast significantly improves after applying HE because the intensity values get more spread out wherever the pdf is concentrated.</p><p>In case of image 5, it is helpful because there are 2 peaks - at very dark pixels (~0) and very bright pixels (~255).</p><p>This can be verified by looking at the PDF of the 3 independent channels which is given below:</p><img vspace="5" hspace="5" src="myMainScript_14.png" alt=""> <h2 id="10">Q2 d</h2><img vspace="5" hspace="5" src="myMainScript_15.png" alt=""> <p>On applying HM, the veins in the original image become more prominent.</p><p>However, on applying the algorithm to each channel separately, the bright spot on the left becomes even brighter and we lose information.</p><p>References:</p><div><ul><li>Filling missing values while calculating inverse: <a href="https://in.mathworks.com/help/matlab/ref/fillmissing.html">https://in.mathworks.com/help/matlab/ref/fillmissing.html</a></li></ul></div><h2 id="12">Q2 e</h2><p>This part of the code takes more than 5 minutes</p><p>We carry out CLAHE with a window size of 11, 41, 81 as all 3 give signifciantly distinct outputs.</p><p>The thresholds chosen are 0.1 and 0.05 since they exhibit different outputs too!</p><pre class="codeoutput">Elapsed time is 925.348829 seconds.
+</pre><img vspace="5" hspace="5" src="myMainScript_16.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_17.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_18.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_19.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_20.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_21.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_22.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_23.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_24.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_25.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_26.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_27.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_28.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_29.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_30.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_31.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_32.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_33.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_34.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_35.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_36.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_37.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_38.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_39.png" alt=""> <p>We can observe that on increasing the window size, the noise decreases but at the cost of decrease in the local contrast</p><p>On the other hand, a higher threshold leads to higher noise while a lower threshold leads to a smoother image</p><p>References:</p><div><ul><li>nlfilt uses a sliding window approach to efficiently calculate a scalar value for centre pixel: <a href="https://in.mathworks.com/help/images/ref/nlfilter.html">https://in.mathworks.com/help/images/ref/nlfilter.html</a></li><li>Nested function: <a href="https://in.mathworks.com/help/matlab/matlab_prog/nested-functions.html?s_tid=srchtitle">https://in.mathworks.com/help/matlab/matlab_prog/nested-functions.html?s_tid=srchtitle</a></li></ul></div><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Q2
+clear
+clc
+myNumOfColors = 200;
+myColorScale = [ [0:1/(myNumOfColors-1):1]' , ...
+    [0:1/(myNumOfColors-1):1]' , [0:1/(myNumOfColors-1):1]' ];
+filenames = {'../data/barbara.png', '../data/TEM.png', '../data/canyon.png', '../data/church.png', '../data/chestXray.png', '../images/a_foreground.png'};
+nums = [1 2 3 5 6 7];
+image_counter = 1;
+
+%% Q2 a
+%%
+% By trying out a few values, we finalised a threshold of 13 for preserving
+% the hands and the statue.
+[image, mask, foreground] = myForegroundMask('../data/statue.png', 13);
+f = figure('visible', 'on');
+colormap gray;
+subplot(1,3,1), imagesc(image);
+title('original image');
+daspect ([1 1 1]);
+colorbar;
+subplot(1,3,2), imagesc(mask);
+title('mask');
+daspect ([1 1 1]);
+colorbar;
+subplot(1,3,3), imagesc(foreground);
+title('foreground image');
+daspect ([1 1 1]);
+colorbar;
+axis tight;
+% saving only foreground
+imwrite(foreground, '../images/a_foreground.png')
+save('../images/a_foreground.mat', 'foreground');
+
+
+%% Q2 b
+%%
+% We use a 5 percentile-95 percentile strategy. Let:
+%
+% $m_1 = \left \lfloor{cdf^{-1}(0.05)}\right \rfloor$ and $m_2 = \left \lfloor{cdf^{-1}(0.95)}\right \rfloor$ where cdf is the cumulative distribution function of the image intensities.
+% 
+% The transformaton function is: $f(x,y) = (I(x,y) - m_1)/(m_2-m_1)$ where
+% I(x,y) denotes the pixel intensity of pixel (x,y).
+%
+% Values below $m_1$ and above $m_2$ are mapped to 0 and 255 respectively.
+
+for eg = 1:length(filenames)
+    pth = filenames{eg};
+    save_name = strcat('../results/b_', string(nums(eg)));
+    [original, new] = myLinearContrastStretching(pth);
+    f = figure('visible', 'on');    
+    axis tight;
+    subplot(1,2,1), imagesc(original);
+    title('original image');
+    daspect ([1 1 1]);
+    if eg == 3 || eg == 4
+        colormap(myColorScale)
+    else
+        colormap gray
+        colorbar
+    end
+    subplot(1,2,2), imagesc(new);
+    title('after linear contrast');
+    daspect ([1 1 1]);
+    if eg == 3 || eg == 4
+        colormap(myColorScale)
+    else
+        colormap gray
+        colorbar
+    end
+%     saveas(f, save_name, 'png');
+end
+
+%%
+% References:
+% 
+% * Colormap: https://www.mathworks.com/help/matlab/ref/gray.html
+% * imhist function: https://in.mathworks.com/help/images/ref/imhist.html
+% * Calculation of CDF: https://in.mathworks.com/help/matlab/ref/cumsum.html
+
+%%
+% Contrast stretching is not effective in image 5 because it contains many 
+% high-intensity pixels (close to 255) and many dark pixels (close to 0).
+%
+% As a result, $m_1 \approx 0$ and $m_2 \approx 255$, which results in a linear
+% function equivalent to the identity mapping.
+
+%% Q2 c
+
+for eg = 1:length(filenames)
+    pth = filenames{eg};
+    save_name = strcat('../results/c_', string(nums(eg)));
+    [original, new] = myHE(pth);
+    f = figure('visible', 'on');    
+    axis tight;
+    subplot(1,2,1), imagesc(original);
+    title('original image')
+    daspect ([1 1 1]);
+    if eg == 3 || eg == 4
+        colormap(myColorScale)
+    else
+        colormap gray
+        colorbar
+    end
+    subplot(1,2,2), imagesc(new);
+    title('histogram-equalised image')
+    daspect ([1 1 1]);
+    if eg == 3 || eg == 4
+        colormap(myColorScale)
+    else
+        colormap gray
+        colorbar
+    end
+    % saveas(f, save_name, 'png');
+end
+
+%%
+% On applying HE on image 5, we get a much better result as compared to
+% Linear Contrast Stretching.
+%
+% Contrast significantly improves after applying HE because the intensity
+% values get more spread out wherever the pdf is concentrated.
+%
+% In case of image 5, it is helpful because there are 2 peaks - at very
+% dark pixels (~0) and very bright pixels (~255).
+%
+% This can be verified by looking at the PDF of the 3 independent channels
+% which is given below:
+clf
+orig_img = imread('../data/church.png');
+for channel = 1:size(orig_img, 3)
+    % calculate histogram
+    [counts, ~] = imhist(orig_img(:,:,channel)); % ~ means ignore    
+    % calculate cdf
+    pdf = counts/sum(counts);
+    plot(1:256, pdf)
+    hold on
+end
+title('PDF')
+hold off
+
+%% Q2 d
+[ref_img, input_img, hm_img] = myHM('../data/retinaRef.png', '../data/retina.png');
+f = figure('visible', 'on');
+subplot(1,3,1), imagesc(ref_img);
+title('reference image');
+daspect ([1 1 1]);
+colormap(myColorScale)
+subplot(1,3,2), imagesc(input_img);
+title('input image');
+daspect ([1 1 1]);
+colormap(myColorScale)
+subplot(1,3,3), imagesc(hm_img);
+title('histogram-matched image');
+daspect ([1 1 1]);
+colormap(myColorScale)
+axis tight;
+% saveas(f, '../results/d', 'png');
+
+%% 
+% On applying HM, the veins in the original image become more prominent.
+%
+% However, on applying the algorithm to each channel separately, the bright
+% spot on the left becomes even brighter and we lose information.
+%
+% References:
+%
+% * Filling missing values while calculating inverse: https://in.mathworks.com/help/matlab/ref/fillmissing.html
+
+%% Q2 e
+tic
+%%
+% This part of the code takes more than 5 minutes
+%
+% We carry out CLAHE with a window size of 11, 41, 81 as all 3 give
+% signifciantly distinct outputs.
+%
+% The thresholds chosen are 0.1 and 0.05 since they exhibit different
+% outputs too!
+filenames = {'../data/barbara.png', '../data/TEM.png', '../data/canyon.png', '../data/chestXray.png'};
+nums = [1 2 3 6];
+thresholds = [0.05, 0.1];
+threshold_names = {'point_zerofive.mat', 'point_one.mat'};
+for eg = 1:length(filenames)
+    pth = filenames{eg};
+    for one_sided_window_size = [5, 20, 40]
+        for thresh_case = 1:length(threshold_names)
+            threshold = thresholds(thresh_case);
+            window_size = 2*one_sided_window_size+1;            
+            save_name = strcat('../images/e_', string(nums(eg)), '_', string(window_size), '_', threshold_names{thresh_case});
+            [original, new] = myCLAHE(pth, one_sided_window_size, threshold);
+            f = figure('visible', 'on');
+            axis tight;
+            subplot(1,2,1), imagesc(original);
+            title('original image')
+            daspect ([1 1 1]);
+            if eg == 3
+                colormap(myColorScale)
+            else
+                colormap gray
+                colorbar
+            end
+            subplot(1,2,2), imagesc(new);
+            t = strcat('CLAHE with N = ', string(window_size), ' and t = ', string(threshold));
+            title(t)
+            daspect ([1 1 1]);
+            if eg == 3
+                colormap(myColorScale)
+            else
+                colormap gray
+                colorbar
+            end
+            save(save_name, 'original', 'new');
+        end
+    end
+end
+toc
+%%
+% We can observe that on increasing the window size, the noise decreases
+% but at the cost of decrease in the local contrast
+%
+% On the other hand, a higher threshold leads to higher noise while a lower
+% threshold leads to a smoother image
+%
+% References:
+%
+% * nlfilt uses a sliding window approach to efficiently calculate a scalar value for centre pixel: https://in.mathworks.com/help/images/ref/nlfilter.html
+% * Nested function: https://in.mathworks.com/help/matlab/matlab_prog/nested-functions.html?s_tid=srchtitle
+
+##### SOURCE END #####
+--></body></html>
